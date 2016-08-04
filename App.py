@@ -1,6 +1,7 @@
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
+import simplejson as json
 
 c_key = "EjGa9Qarey1v5Q9NFiayO8ikN"
 c_secret = "RbGIUEZhdHwId1GB01K8T0fTPnwah0Pc0q3RcxKIETq8dMnGfh"
@@ -11,7 +12,8 @@ print("Authenticated with cosumer key : "+c_key+" and consumer secret :  "+c_sec
 
 class listener(StreamListener):
     def on_data(self, data):
-        print(data)
+        data = json.loads(data)
+        print(data.get("text")) 
         return True
 
     def on_error(self, status):
