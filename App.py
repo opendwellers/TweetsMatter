@@ -2,11 +2,15 @@ from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 import simplejson as json
+import configparser as ConfigParser
 
-c_key = "EjGa9Qarey1v5Q9NFiayO8ikN"
-c_secret = "RbGIUEZhdHwId1GB01K8T0fTPnwah0Pc0q3RcxKIETq8dMnGfh"
-a_token = "760836832699359233-oJv1BuImm2HqR5zHfA9klh415lMG3sq"
-a_secret = "Llh4zbFuUj6fNfPb3QsuFFSr9oC0Bq51z0paKTndIehlM"
+Config = ConfigParser.ConfigParser()
+Config.read("conf/config")
+
+c_key = Config.get('twitter','Ckey')
+c_secret = Config.get('twitter','CSecret')
+a_token = Config.get('twitter','AToken')
+a_secret = Config.get('twitter','ASecret')
 
 class listener(StreamListener):
     def on_data(self, data):
