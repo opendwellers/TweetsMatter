@@ -20,10 +20,16 @@ http = urllib3.PoolManager()
 class listener(StreamListener):
     def on_data(self, data):
         data = json.loads(data)
-        print(data.get("text"))
+        print(data)
+        text = data.get('text')
+        user = data.get('user')
+        screen_name = user.get('screen_name')
         payload = {'username' : 'Trump', 'icon_url' : avatar, 'text' : data.get("text")}
-        r = http.request('POST',hook ,headers={'Content-Type':'application/json'} ,body=json.dumps(payload))
-        print(r.read())
+        print(screen_name)
+        if screen_name == 'realDonaldTrump':
+            print("sending ... ")
+            r = http.request('POST',hook ,headers={'Content-Type':'application/json'} ,body=json.dumps(payload))
+            print(r.read())
         return True
 
     def on_error(self, status):
