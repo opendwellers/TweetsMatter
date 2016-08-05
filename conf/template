@@ -1,10 +1,22 @@
 [twitter]
+
+# These are the tokens obtained from Twitter
 CKey: 
 CSecret: 
 AToken: 
-ASecret: 
+ASecret:
+
+# This is the ID/Name of the user to follow
+User:
 
 [mattermost]
+
+# This is the name of the bot
+Name:
+
+# This is a link to the bot's image
 AvatarURL:
+
+# This is a link to a mattermost hook
 Hook: 
 
