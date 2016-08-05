@@ -46,7 +46,7 @@ class listener(StreamListener):
         url     = 'https://twitter.com/' + screen
 
         return {
-            'username' : 'Trump',
+            'username' : bot,
             'icon_url' : avatar,
 
             'attachments' : [{
@@ -85,6 +85,7 @@ if __name__ == '__main__':
         a_token  = Config.get('twitter', 'AToken')
         a_secret = Config.get('twitter', 'ASecret')
         user     = Config.get('twitter', 'User')
+        bot      = Config.get('mattermost', 'Name')
         avatar   = Config.get('mattermost', 'AvatarURL')
         hook     = Config.get('mattermost', 'Hook')
     except ConfigParser.NoOptionError as exception:

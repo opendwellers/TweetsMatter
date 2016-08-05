@@ -6,6 +6,7 @@ ASecret:
 User:
 
 [mattermost]
+Name:
 AvatarURL:
 Hook: 
 
