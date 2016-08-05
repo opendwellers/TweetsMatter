@@ -1,3 +1,4 @@
+from tweepy import API
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -8,6 +9,9 @@ import configparser as ConfigParser
 import urllib3
 
 class listener(StreamListener):
+    def __init__(self, target):
+        self.target = target
+
     def on_data(self, data):
         # Load the json data
         data = json.loads(data)
@@ -15,16 +19,16 @@ class listener(StreamListener):
         # Get the bot owner's information
         user = data.get('user')
 
-        # Get the tweeter and the messagea
-        tweeter = user.get('screen_name')
+        # Get the user name and the message of the tweet
+        name = user.get('screen_name')
         message = data.get('text')
 
         # Make sure the tweeter is the one we want
-        if tweeter != 'realDonaldTrump':
+        if name != self.target.screen_name:
             return True
 
         # Send the payload to the mattermost server
-        payload = json.dumps(self.create_payload("asdasd"))
+        payload = json.dumps(self.create_payload(message))
         http.request('POST', hook, headers={'Content-Type':'application/json'}, body=payload)
 
         return True
@@ -33,17 +37,23 @@ class listener(StreamListener):
         print(status)
 
     def create_payload(self, message):
+        screen = self.target.screen_name
+
+        name = self.target.name
+        icon = 'http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png'
+        profile = '@' + screen
+        url = 'https://twitter.com/' + screen
+
         return {
             'username' : 'Trump',
             'icon_url' : avatar,
 
             'attachments' : [{
-                'fallback'   : 'test',
                 'color'      : '#FF8000',
-                'author_name': 'Donald Trump',
-                'author_icon': 'http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png', 
-                'title': '@realdonaldtrump',
-                'title_link': 'https://twitter.com/realdonaldtrump',
+                'author_name': name,
+                'author_icon': icon, 
+                'title': profile,
+                'title_link': url,
                 'fields': [{
                     'short' : False,
                     'value' : message
@@ -86,6 +96,10 @@ if __name__ == '__main__':
     auth = OAuthHandler(c_key, c_secret)
     auth.set_access_token(a_token, a_secret)
 
+    # Get the user object
+    api = API(auth)
+    target = api.get_user('25073877')
+
     # Create Twitter stream
-    twitterStream = Stream(auth, listener())
+    twitterStream = Stream(auth, listener(target))
     twitterStream.filter(follow=['25073877'])
