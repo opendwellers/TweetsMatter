@@ -26,7 +26,7 @@ You can install the requirements with pip
 
 * Run the bot!
 
-`python App.py`
+`python App.py /path/to/config`
 
 ## TODO
 
