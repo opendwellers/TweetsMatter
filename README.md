@@ -16,7 +16,7 @@ You can install the requirements with pip
 
 * Either download the latest release or clone the repo
 
-`git clone git@github.com:philippesasseville/pol16bot.git`
+`git clone git@github.com:philippesasseville/TweetsMatter.git`
 
 * Fill the default config template in the "config" folder (comments should help with filling the values)
 
