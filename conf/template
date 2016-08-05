@@ -3,6 +3,7 @@ CKey:
 CSecret: 
 AToken: 
 ASecret: 
+User:
 
 [mattermost]
 AvatarURL:

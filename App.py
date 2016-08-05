@@ -39,10 +39,11 @@ class listener(StreamListener):
     def create_payload(self, message):
         screen = self.target.screen_name
 
-        name = self.target.name
-        icon = 'http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png'
+        # Format payload
+        name    = self.target.name
+        icon    = 'http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png'
         profile = '@' + screen
-        url = 'https://twitter.com/' + screen
+        url     = 'https://twitter.com/' + screen
 
         return {
             'username' : 'Trump',
@@ -52,8 +53,8 @@ class listener(StreamListener):
                 'color'      : '#FF8000',
                 'author_name': name,
                 'author_icon': icon, 
-                'title': profile,
-                'title_link': url,
+                'title'      : profile,
+                'title_link' : url,
                 'fields': [{
                     'short' : False,
                     'value' : message
@@ -79,12 +80,13 @@ if __name__ == '__main__':
 
     # Parse the configuration
     try:
-        c_key = Config.get('twitter','Ckey')
-        c_secret = Config.get('twitter','CSecret')
-        a_token = Config.get('twitter','AToken')
-        a_secret = Config.get('twitter','ASecret')
-        avatar = Config.get('mattermost', "AvatarURL")
-        hook = Config.get('mattermost','Hook')
+        c_key    = Config.get('twitter', 'Ckey')
+        c_secret = Config.get('twitter', 'CSecret')
+        a_token  = Config.get('twitter', 'AToken')
+        a_secret = Config.get('twitter', 'ASecret')
+        user     = Config.get('twitter', 'User')
+        avatar   = Config.get('mattermost', 'AvatarURL')
+        hook     = Config.get('mattermost', 'Hook')
     except ConfigParser.NoOptionError as exception:
         print(exception)
         exit(1)
@@ -98,8 +100,8 @@ if __name__ == '__main__':
 
     # Get the user object
     api = API(auth)
-    target = api.get_user('25073877')
+    target = api.get_user(user)
 
     # Create Twitter stream
     twitterStream = Stream(auth, listener(target))
-    twitterStream.filter(follow=['25073877'])
+    twitterStream.filter(follow=[user])
