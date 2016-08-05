@@ -5,18 +5,6 @@ import simplejson as json
 import configparser as ConfigParser
 import urllib3
 
-Config = ConfigParser.ConfigParser()
-Config.read("conf/config")
-
-c_key = Config.get('twitter','Ckey')
-c_secret = Config.get('twitter','CSecret')
-a_token = Config.get('twitter','AToken')
-a_secret = Config.get('twitter','ASecret')
-avatar = Config.get('mattermost', "AvatarURL")
-hook = Config.get('mattermost','Hook')
-
-http = urllib3.PoolManager()
-
 class listener(StreamListener):
     def on_data(self, data):
         data = json.loads(data)
@@ -35,7 +23,22 @@ class listener(StreamListener):
     def on_error(self, status):
         print(status)
 
-auth = OAuthHandler(c_key, c_secret)
-auth.set_access_token(a_token, a_secret)
-twitterStream = Stream(auth, listener())
-twitterStream.filter(follow=['25073877'])
+
+if __name__ == '__main__':
+    Config = ConfigParser.ConfigParser()
+    Config.read("conf/config")
+
+    c_key = Config.get('twitter','Ckey')
+    c_secret = Config.get('twitter','CSecret')
+    a_token = Config.get('twitter','AToken')
+    a_secret = Config.get('twitter','ASecret')
+    avatar = Config.get('mattermost', "AvatarURL")
+    hook = Config.get('mattermost','Hook')
+
+    http = urllib3.PoolManager()
+
+
+    auth = OAuthHandler(c_key, c_secret)
+    auth.set_access_token(a_token, a_secret)
+    twitterStream = Stream(auth, listener())
+    twitterStream.filter(follow=['25073877'])
