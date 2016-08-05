@@ -1,4 +1,4 @@
-# pol16bot
+# TweetsMatter
 ## Description
 
 Python bot based on [tweepy](https://github.com/tweepy/tweepy) that posts to a [mattermost](https://www.mattermost.org/) channel.
