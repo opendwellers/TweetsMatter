@@ -12,8 +12,8 @@ c_key = Config.get('twitter','Ckey')
 c_secret = Config.get('twitter','CSecret')
 a_token = Config.get('twitter','AToken')
 a_secret = Config.get('twitter','ASecret')
+avatar = Config.get('mattermost', "AvatarURL")
 hook = Config.get('mattermost','Hook')
-avatar = 'http://i.imgur.com/RCKRF2B.png'
 
 http = urllib3.PoolManager()
 
