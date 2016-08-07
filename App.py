@@ -45,6 +45,16 @@ class listener(StreamListener):
         profile = '@' + screen
         url     = 'https://twitter.com/' + screen
 
+        # Format the message with markdown, if possible
+        msg = ''
+        for word in message.split():
+            if word[0] == '@':
+                msg += self.format_link(word)
+            else:
+                msg += word
+            msg += ' '
+
+        # Create the payload itself
         return {
             'username' : bot,
             'icon_url' : avatar,
@@ -52,15 +62,27 @@ class listener(StreamListener):
             'attachments' : [{
                 'color'      : '#FF8000',
                 'author_name': name,
-                'author_icon': icon, 
+                'author_icon': icon,
                 'title'      : profile,
                 'title_link' : url,
                 'fields': [{
                     'short' : False,
-                    'value' : message
+                    'value' : msg
                 }]
             }]
         }
+
+    def format_link(self, name):
+        # Find the range of the name
+        for i in range(1, len(name)):
+            if not ((name[i].isalnum()) or (name[i] == '_')):
+                break
+
+        # Fix the range if the last letter is valid
+        if (name[i].isalnum()) or (name[i] == '_'):
+            i += 1
+
+        return '[@' + name[1:i] + '](https://twitter.com/' + name[1:i] + ')' + name[i:]
 
 if __name__ == '__main__':
     # Make sure the config file was given
