@@ -30,4 +30,4 @@ You can install the requirements with pip
 
 ## TODO
 
-For a complete list of issues and feature requests, please check the [issues](https://github.com/philippesasseville/pol16bot/issues)
+For a complete list of issues and feature requests, please check the [issues](https://github.com/philippesasseville/TweetsMatter/issues)
